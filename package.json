@@ -1,5 +1,5 @@
 {
-  "name": "htdc",
+  "name": "@sadgabi20/htdc",
   "version": "0.0.1",
   "description": "HyperText Document Compiler: Markup to PDF",
   "main": "index.js",

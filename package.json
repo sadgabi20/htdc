@@ -1,0 +1,21 @@
+{
+  "name": "htdc",
+  "version": "0.0.1",
+  "description": "HyperText Document Compiler: Markup to PDF",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["pdf", "markup", "html", "doc", "markdown"],
+  "author": "sadgabi20",
+  "license": "MIT",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.21.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.21.0",
+  "type": "module"
+}

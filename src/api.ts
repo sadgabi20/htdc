@@ -64,6 +64,23 @@ export class HTDC {
         return finalCount;
     }
 
+    #parseTxt(txt: string) {
+        let i = 0;
+
+        return txt.split('').map(c => {
+            if (c != '*') return c;
+
+            if (i === 0) {
+                i = 1;
+                return '<i>';
+            }
+            if (i === 1) {
+                i = 0;
+                return '</i>';
+            }
+        }).join('');
+    }
+
     section(name: string, config: SectionConfig = SECTION_DEFAULT_CONFIG) {
         this.nodes.push({ type: 'section', name, config });
         return this;
@@ -100,22 +117,24 @@ export class HTDC {
     }
 
     p(txt: string, config?: Partial<ParagraphConfig>) {
+        txt = this.#parseTxt(txt);
         const finalConfig = { ...PARAGRAPH_DEFAULT_CONFIG, ...config };
         this.nodes.push({ type: 'paragraph', txt, config: finalConfig });
         return this;
     }
 
-    beginList() {
-        this.nodes.push({ type: 'beginList' })
+    beginList(listType: 'ul' | 'ol' | 'dl') {
+        this.nodes.push({ type: 'beginList', listType })
         return this;
     }
 
-    endList() {
-        this.nodes.push({ type: 'endList' })
+    endList(listType: 'ul' | 'ol' | 'dl') {
+        this.nodes.push({ type: 'endList', listType })
         return this;
     }
 
     item(txt: string) {
+        txt = this.#parseTxt(txt);
         this.nodes.push({ type: 'item', txt });
         return this;
     }
@@ -140,8 +159,8 @@ export class HTDC {
                 case 'h3': return `<h3>${node.num}&#160;&#160;${node.txt}</h3>`;
                 case 'h4': return `<h4>${node.num}&#160;&#160;${node.txt}</h4>`;
                 case 'paragraph': return `<p style="..."> ${node.txt} </p>`;
-                case 'beginList': return '<ul>';
-                case 'endList': return '</ul>';
+                case 'beginList': return `<${node.listType}>`;
+                case 'endList': return `</${node.listType}>`;
                 case 'item': return `<li>${node.txt}</li>`;
                 case 'image': return `<img src="${node.src}" width="${node.config.width * 100}%" />`;
                 case 'break': return '<br>'.repeat(node.count);

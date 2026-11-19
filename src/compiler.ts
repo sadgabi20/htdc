@@ -21,7 +21,7 @@ export async function createPDF(html: string, css: string) {
             preferCSSPageSize: true,   // Lets your @page CSS dictate the paper size
         });
 
-        console.log('PDF generated successfully!');
+        console.log('PDF generated successfully');
     } finally {
         // Always close the browser
         await browser.close();

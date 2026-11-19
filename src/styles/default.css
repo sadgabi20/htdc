@@ -1,6 +1,7 @@
 :root {
     --page-size: letter;
-    --margin: 18mm;
+    --margin-horizontal: 1.91cm;
+    --margin-vertical: 2.54cm;
     --indentation: 1.25cm;
 
     --body-font: 'Aptos Serif', serif;
@@ -11,7 +12,8 @@
 
 @page {
     size: var(--page-size);
-    margin: var(--margin);
+    margin-inline: var(--margin-horizontal);
+    margin-block: var(--margin-vertical);
 }
 
 body {

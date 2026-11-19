@@ -1,6 +1,6 @@
 // ===== HTDC (HyperText Document Compositor) sample document ===== //
 // ===== Programmatic API usage ===== //
-import { createPDF, HTDC } from "../src/index.ts";
+import { createPDF, HTDC } from "../../src/index.js";
 import path from "node:path";
 import * as fs from "node:fs/promises";
 

@@ -6,6 +6,7 @@ export interface Token {
 }
 
 export type RuleTypesAST = 'comment' | 'title' | 'subtitle' | 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'list' | 'item' | undefined ;
+export type ListsTypes = 'ul' | 'ol' | 'dl' ;
 
 export interface RulesetAST {
     type: RuleTypesAST,

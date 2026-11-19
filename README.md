@@ -1,2 +1,2 @@
 # htdc
-HyperText Document Compiler: Markup to PDF
+HyperText Document Compositor: Markup to PDF

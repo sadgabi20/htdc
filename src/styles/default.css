@@ -1,0 +1,98 @@
+:root {
+    --page-size: letter;
+    --margin: 18mm;
+    --indentation: 1.25cm;
+
+    --body-font: 'Aptos Serif', serif;
+    --titles-font: 'Fraunces', serif;
+
+    --page-color: transparent;
+}
+
+@page {
+    size: var(--page-size);
+    margin: var(--margin);
+}
+
+body {
+    font-family: var(--body-font);
+    line-height: 1.5;
+    text-align: justify;
+    background-color: var(--page-color);
+}
+
+h1,
+h2,
+.doc-title,
+.doc-subtitle {
+    font-family: var(--titles-font);
+    font-weight: 600;
+}
+
+.doc-title {
+    font-size: 28pt;
+    margin: 0;
+}
+
+.doc-subtitle {
+    opacity: 0.75;
+    font-size: 14pt;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+h1, h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+    margin: 0;
+    margin-block: 0.25em;
+}
+
+h1 {
+    font-size: 20pt;
+}
+
+h2 {
+    font-size: 18pt;
+}
+
+h3 {
+    font-size: 14pt;
+}
+
+h4 {
+    font-size: 12pt;
+    font-style: italic;
+    text-indent: var(--indentation);
+}
+
+p {
+    orphans: 4;
+    widows: 3;
+    margin: 0;
+    margin-bottom: 1em;
+    text-indent: var(--indentation);
+}
+
+:not(p) + p {
+    text-indent: 0;
+}
+
+ul {
+    margin: 0;
+    margin-bottom: 1em;
+    padding-left: var(--indentation);
+}
+
+li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0.35em;
+}
+
+@media print {
+    .screen-only {
+        display: none;
+    }
+}

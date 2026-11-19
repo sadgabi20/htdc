@@ -1,3 +1,6 @@
+import * as fs from 'node:fs/promises';
+import { PathLike } from 'node:fs';
+
 export type NumberingPosition = 'tl' | 'tc' | 'tr' | 'bl' | 'bc' | 'br';
 export type PaginationFormat = '123' | 'abc' | 'roman';
 export type TextContainer = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'title' | 'subtitle';
@@ -5,6 +8,7 @@ export type IndentationType = 'normal' | 'first-line' | 'french';
 export type TextAlignment = 'left' | 'center' | 'right' | 'justified';
 
 export interface DocumentConfig {
+    mainStyle: PathLike,
     countImages?: boolean,
     countTables?: boolean,
 }
@@ -29,4 +33,9 @@ export interface PaginationConfig {
 export interface SectionConfig {
     paragraph?: ParagraphConfig,
     pagination?: PaginationConfig,
+}
+
+export interface ImgConfig {
+    title?: string,
+    width?: number,
 }

@@ -25,21 +25,21 @@ doc.h2("Propulsion and Armament Trade-offs");
 
 doc.p("Pushing a warship past 35 knots required immense shaft horsepower, forcing engineers to balance armor protection against machinery weight. Most interwar designs sacrificed hull plating entirely in favor of three core capabilities:");
 
-doc.beginList();
-doc.item("High-Pressure Boilers: Superheated steam turbines capable of rapid acceleration during fleet engagements.");
-doc.item("Heavy Torpedo Batteries: Quadruple or quintuple launchers firing oxygen-enriched long-range torpedoes.");
-doc.item("Dual-Purpose Artillery: Enclosed turrets engineered to engage both surface targets and high-altitude aircraft.");
-doc.endList();
+doc.beginList('ul');
+doc.item("*High-Pressure Boilers*: Superheated steam turbines capable of rapid acceleration during fleet engagements.");
+doc.item("*Heavy Torpedo Batteries*: Quadruple or quintuple launchers firing oxygen-enriched long-range torpedoes.");
+doc.item("*Dual-Purpose Artillery*: Enclosed turrets engineered to engage both surface targets and high-altitude aircraft.");
+doc.endList('ul');
 
 doc.h2("Operational Deployment Sequence");
 doc.p("During a standard nighttime torpedo run against an opposing battleline, destroyer squadrons executed a strict tactical sequence:");
 
-doc.beginList();
-doc.item("Reconnaissance and Contact: Scout cruisers and vanguard destroyers locate the enemy main body using optical rangefinders and star shells.");
-doc.item("High-Speed Approach: Divisions form in line-ahead formation, accelerating to flank speed under the cover of darkness or laid smoke screens.");
-doc.item("Firing Solution and Salvo: Upon reaching optimal launch angles, ships turn simultaneously to unmask broadside tubes and release staggered torpedo spreads.");
-doc.item("Disengagement: Vessels execute a sharp turn away from the target bearing, deploying smoke and rear-facing guns to deter pursuing pickets.");
-doc.endList();
+doc.beginList('ol');
+doc.item("*Reconnaissance and Contact*: Scout cruisers and vanguard destroyers locate the enemy main body using optical rangefinders and star shells.");
+doc.item("*High-Speed Approach*: Divisions form in line-ahead formation, accelerating to flank speed under the cover of darkness or laid smoke screens.");
+doc.item("*Firing Solution and Salvo*: Upon reaching optimal launch angles, ships turn simultaneously to unmask broadside tubes and release staggered torpedo spreads.");
+doc.item("*Disengagement*: Vessels execute a sharp turn away from the target bearing, deploying smoke and rear-facing guns to deter pursuing pickets.");
+doc.endList('ol');
 
 // ===== SECTION 2 ===== //
 doc.section("treaty-constraints");
@@ -51,11 +51,11 @@ doc.p("The London Naval Treaty of 1930 imposed strict tonnage ceilings that fund
 
 doc.p("To circumvent these restrictions without sacrificing combat effectiveness, major naval powers adopted divergent engineering philosophies:");
 
-doc.beginList();
-doc.item("Imperial Japanese Navy: Constructed the Fubuki and Kagero classes, prioritizing massive torpedo broadsides and heavy main batteries even at the cost of top-heaviness and hull stress.");
-doc.item("United States Navy: Focused on high-pressure, high-temperature steam plants and electric welding to save structural weight, resulting in the long-range Mahan and Somers classes.");
-doc.item("Royal Navy: Emphasized seakeeping, anti-submarine warfare integration, and balanced gun-torpedo armament across the A through I class progression.");
-doc.endList();
+doc.beginList('ul');
+doc.item("*Imperial Japanese Navy*: Constructed the Fubuki and Kagero classes, prioritizing massive torpedo broadsides and heavy main batteries even at the cost of top-heaviness and hull stress.");
+doc.item("*United States Navy*: Focused on high-pressure, high-temperature steam plants and electric welding to save structural weight, resulting in the long-range Mahan and Somers classes.");
+doc.item("*Royal Navy*: Emphasized seakeeping, anti-submarine warfare integration, and balanced gun-torpedo armament across the A through I class progression.");
+doc.endList('ul');
 
 // ===== SECTION 3 ===== //
 doc.section("conclusion");

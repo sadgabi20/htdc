@@ -1,2 +1,7 @@
 .gitattributes
 *.tgz
+sample/
+*.pdf
+tests/
+*.config.*
+tsconfig.*

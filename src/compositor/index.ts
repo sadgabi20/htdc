@@ -4,7 +4,7 @@ import type { ListsTypes } from "../parser/types.ts";
 import { createPDF } from "../compiler.ts";
 import path from "node:path";
 import * as fs from "node:fs/promises";
-import { html2pdf } from "../index.js";
+import { html2pdf } from "../index.ts";
 
 const CSS_PATH = path.resolve(import.meta.dirname, '../styles/default.css');
 const CSS = await fs.readFile(CSS_PATH, { encoding: 'utf-8' });

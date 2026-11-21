@@ -1,6 +1,15 @@
 import { chromium } from "@playwright/test"; // Or: import { chromium } from 'playwright';
+import type { HTMLDoc } from "./types.ts";
+import { htdc2html } from "./compositor/index.ts";
+import path from "node:path";
+import * as fs from "node:fs/promises";
 
-export async function createPDF(html: string, css: string) {
+const CSS_PATH = path.resolve(import.meta.dirname, '../src/styles/default.css');
+const CSS = await fs.readFile(CSS_PATH, { encoding: 'utf-8' });
+
+export async function html2pdf(htmlDoc: HTMLDoc, css: string) {
+    const { fileName, html } = htmlDoc;
+
     // 1. Launch the browser
     const browser = await chromium.launch();
     const page = await browser.newPage();
@@ -16,7 +25,7 @@ export async function createPDF(html: string, css: string) {
 
         // 5. Generate the PDF
         await page.pdf({
-            path: 'custom-output.pdf', // The file path for the generated PDF
+            path: fileName + '.pdf', // The file path for the generated PDF
             printBackground: true,     // Essential for backgrounds/images to appear
             preferCSSPageSize: true,   // Lets your @page CSS dictate the paper size
         });
@@ -26,4 +35,9 @@ export async function createPDF(html: string, css: string) {
         // Always close the browser
         await browser.close();
     }
+}
+
+export async function htdc2pdf(src:string) {
+    const htmlDoc = await htdc2html(src);
+    await html2pdf(htmlDoc, CSS);
 }

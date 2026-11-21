@@ -8,7 +8,7 @@ const HTDC_SYMBOLS = {
         br: '\n',
     }
 };
-const TEXT_DIRECTIVES: ReadonlySet<string> = new Set(['title', 'subtitle', 'h1', 'h2', 'h3', 'h4']);
+const TEXT_DIRECTIVES: ReadonlySet<string> = new Set(['filename', 'title', 'subtitle', 'h1', 'h2', 'h3', 'h4']);
 const LIST_DIRECTIVE = /^list\.(ul|ol|dl)$/;
 
 function logError(msg: string, options?: { pos?: { line: number, char: number } }) {

@@ -9,6 +9,9 @@ const styles = await fs.readFile(cssPath, { encoding: 'utf-8' });
 
 const doc = new HTDC();
 
+// ===== SET PDF FILE NAME ===== //
+doc.fileName = 'THE_EVOLUTION_OF_DESTROYER_DESIGN';
+
 // ===== SECTION 1 ===== //
 doc.section("introduction");
 

@@ -1,15 +1,8 @@
 import { parse } from "../parser/index.ts";
 import { HTDC } from "../api.ts";
 import type { ListsTypes } from "../parser/types.ts";
-import { createPDF } from "../compiler.ts";
-import path from "node:path";
-import * as fs from "node:fs/promises";
-import { html2pdf } from "../index.ts";
 
-const CSS_PATH = path.resolve(import.meta.dirname, '../styles/default.css');
-const CSS = await fs.readFile(CSS_PATH, { encoding: 'utf-8' });
-
-export async function composite(src: string) {
+export async function htdc2html(src: string) {
     const doc = new HTDC();
     let currentList: ListsTypes | undefined;
 
@@ -21,6 +14,7 @@ export async function composite(src: string) {
 
         switch (el.type) {
             case 'comment': break;
+            case 'filename': doc.fileName = el.txt; break;
             case 'title': doc.title(el.txt); break;
             case 'subtitle': doc.subtitle(el.txt); break;
             case 'h1': doc.h1(el.txt); break;
@@ -40,7 +34,7 @@ export async function composite(src: string) {
         doc.endList(currentList);
     }
 
-    await createPDF(doc.toHTML(), CSS);
     const html = doc.toHTML();
-    const pdf = html2pdf(html, CSS);
+
+    return html;
 }

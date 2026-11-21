@@ -1,7 +1,13 @@
 import { chromium } from "@playwright/test"; // Or: import { chromium } from 'playwright';
 import type { HTMLDoc } from "./types.ts";
+import { htdc2html } from "./compositor/index.ts";
+import path from "node:path";
+import * as fs from "node:fs/promises";
 
-export async function createPDF(htmlDoc: HTMLDoc, css: string) {
+const CSS_PATH = path.resolve(import.meta.dirname, '../src/styles/default.css');
+const CSS = await fs.readFile(CSS_PATH, { encoding: 'utf-8' });
+
+export async function html2pdf(htmlDoc: HTMLDoc, css: string) {
     const { fileName, html } = htmlDoc;
 
     // 1. Launch the browser
@@ -29,4 +35,9 @@ export async function createPDF(htmlDoc: HTMLDoc, css: string) {
         // Always close the browser
         await browser.close();
     }
+}
+
+export async function htdc2pdf(src:string) {
+    const htmlDoc = await htdc2html(src);
+    await html2pdf(htmlDoc, CSS);
 }

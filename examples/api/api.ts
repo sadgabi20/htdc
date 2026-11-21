@@ -1,6 +1,6 @@
 // ===== HTDC (HyperText Document Compositor) sample document ===== //
 // ===== Programmatic API usage ===== //
-import { createPDF, HTDC } from "../../src/index.js";
+import { html2pdf, HTDC } from "../../src/index.ts";
 import path from "node:path";
 import * as fs from "node:fs/promises";
 
@@ -69,4 +69,4 @@ doc.p("The engineering foundations laid during the 1930s—lightweight welded hu
 
 // ===== COMPOSITE ===== //
 const html = doc.toHTML();
-createPDF(html, styles);
+html2pdf(html, styles);

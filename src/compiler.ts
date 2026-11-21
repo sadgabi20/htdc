@@ -1,6 +1,9 @@
 import { chromium } from "@playwright/test"; // Or: import { chromium } from 'playwright';
+import type { HTMLDoc } from "./types.ts";
 
-export async function createPDF(html: string, css: string) {
+export async function createPDF(htmlDoc: HTMLDoc, css: string) {
+    const { fileName, html } = htmlDoc;
+
     // 1. Launch the browser
     const browser = await chromium.launch();
     const page = await browser.newPage();
@@ -16,7 +19,7 @@ export async function createPDF(html: string, css: string) {
 
         // 5. Generate the PDF
         await page.pdf({
-            path: 'custom-output.pdf', // The file path for the generated PDF
+            path: fileName + '.pdf', // The file path for the generated PDF
             printBackground: true,     // Essential for backgrounds/images to appear
             preferCSSPageSize: true,   // Lets your @page CSS dictate the paper size
         });

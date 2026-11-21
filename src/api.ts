@@ -1,4 +1,4 @@
-import type { DocumentConfig, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
+import type { DocumentConfig, HTMLDoc, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
 
 const PARAGRAPH_DEFAULT_CONFIG: ParagraphConfig = {
     alignment: 'justified',
@@ -21,6 +21,8 @@ const SECTION_DEFAULT_CONFIG: SectionConfig = {
 }
 
 export class HTDC {
+    public fileName: string | undefined;
+
     private documentConfig: DocumentConfig;
     private nodes: Array<any> = [];
     private h1Count = 0;
@@ -31,11 +33,11 @@ export class HTDC {
         this.documentConfig = { countImages: true, countTables: true, ...documentConfig } as DocumentConfig;
     }
 
-    #addTitle(level: 1 | 2 | 3) {
+    #addTitle(level: 1 | 2 | 3 | 4) {
         let finalCount = "";
 
         if (!level) throw Error("a");
-        
+
         if (level === 1) {
             this.h1Count++;
             this.h2Count = 0;
@@ -112,7 +114,7 @@ export class HTDC {
     }
 
     h4(txt: string) {
-        this.nodes.push({ type: 'h4', txt, num: this.#addTitle() });
+        this.nodes.push({ type: 'h4', txt, num: this.#addTitle(4) });
         return this;
     }
 
@@ -149,7 +151,11 @@ export class HTDC {
         return this;
     }
 
-    toHTML(): string {
+    toHTML(): HTMLDoc {
+        if (this.fileName === undefined) {
+            throw Error('An HTDC document must have a file name');
+        }
+
         const docBody = this.nodes.map(node => {
             switch (node.type) {
                 case 'title': return `<div class="doc-title">${node.txt}</div>`;
@@ -168,11 +174,11 @@ export class HTDC {
             }
         }).join('\n');
 
-        const htmlDoc = `<html>
+        const html = `<html>
 <body>${docBody}
 </body>
 </html>`;
 
-        return htmlDoc;
+        return { fileName: this.fileName, html };
     }
 }

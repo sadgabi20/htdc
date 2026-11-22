@@ -1,3 +1,4 @@
 export { htdc2html } from "./compositor/index.ts";
 export { html2pdf } from "./compiler.ts";
 export { HTDC } from "./api.ts";
+export { loadStyles, inlineFonts, DEFAULT_STYLES_PATH } from "./styles/index.ts";

@@ -1,11 +1,6 @@
 // ===== HTDC (HyperText Document Compositor) sample document ===== //
 // ===== Programmatic API usage ===== //
 import { html2pdf, HTDC } from "../../src/index.ts";
-import path from "node:path";
-import * as fs from "node:fs/promises";
-
-const cssPath = path.resolve("./src/styles/default.css");
-const styles = await fs.readFile(cssPath, { encoding: 'utf-8' });
 
 const doc = new HTDC();
 
@@ -70,6 +65,6 @@ doc.p("By the outbreak of global conflict in 1939, the emergence of long-range n
 
 doc.p("The engineering foundations laid during the 1930s—lightweight welded hulls, compact high-output propulsion, and dual-purpose fire control—enabled these vessels to adapt rapidly, cementing the destroyer as the most versatile combatant in modern naval warfare.");
 
-// ===== COMPOSITE ===== //
+// ===== COMPOSE PDF ===== //
 const html = doc.toHTML();
-html2pdf(html, styles);
+await html2pdf(html);

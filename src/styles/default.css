@@ -1,10 +1,20 @@
+@font-face {
+    font-family: 'Source Serif 4';
+    src: url(../fonts/SourceSerif4-VariableFont_opsz\,wght.ttf);
+}
+
+@font-face {
+    font-family: 'Fraunces';
+    src: url(../fonts/Fraunces-VariableFont_SOFT\,WONK\,opsz\,wght.ttf);
+}
+
 :root {
     --page-size: letter;
     --margin-horizontal: 1.91cm;
     --margin-vertical: 2.54cm;
     --indentation: 1.25cm;
 
-    --body-font: 'Aptos Serif', serif;
+    --body-font: 'Source Serif 4', serif;
     --titles-font: 'Fraunces', serif;
 
     --page-color: transparent;

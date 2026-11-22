@@ -1,13 +1,11 @@
 import { chromium } from "@playwright/test"; // Or: import { chromium } from 'playwright';
 import type { HTMLDoc } from "./types.ts";
 import { htdc2html } from "./compositor/index.ts";
-import path from "node:path";
-import * as fs from "node:fs/promises";
+import { loadStyles } from "./styles/index.ts";
 
-const CSS_PATH = path.resolve(import.meta.dirname, '../src/styles/default.css');
-const CSS = await fs.readFile(CSS_PATH, { encoding: 'utf-8' });
+const CSS = await loadStyles();
 
-export async function html2pdf(htmlDoc: HTMLDoc, css: string) {
+export async function html2pdf(htmlDoc: HTMLDoc, css: string = CSS) {
     const { fileName, html } = htmlDoc;
 
     // 1. Launch the browser
@@ -22,6 +20,10 @@ export async function html2pdf(htmlDoc: HTMLDoc, css: string) {
         // 4. (Optional but recommended) Set the media type to 'print'
         // Playwright uses 'print' by default, but being explicit avoids surprises.
         await page.emulateMedia({ media: 'print' });
+
+        // Fonts referenced by the stylesheet load asynchronously; do not create
+        // the PDF until they are ready or it may fall back to system fonts.
+        await page.evaluate(() => document.fonts.ready);
 
         // 5. Generate the PDF
         await page.pdf({

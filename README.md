@@ -34,7 +34,7 @@ The name comes from the fact HTDC create an hypertext document (like HTML) and c
 - Write documents in a readable `.htdc` file, or build them programmatically in JavaScript/TypeScript.
 - Automatically numbered headings, justified paragraphs, ordered/unordered lists, and embedded images.
 - HTML + CSS as an intermediate format, rendered to PDF with Playwright and Chromium.
-- Bundled print stylesheet with embedded Source Serif 4 and Fraunces fonts, so PDFs look the same everywhere.
+- Bundled print stylesheet with embedded Libre Caslon Text and Fraunces fonts, so PDFs look the same everywhere.
 - ESM package written in TypeScript, with helpers for custom stylesheets.
 
 ## Requirements

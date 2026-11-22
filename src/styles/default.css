@@ -13,11 +13,32 @@
     --margin-horizontal: 1.91cm;
     --margin-vertical: 2.54cm;
     --indentation: 1.25cm;
+    --page-color: white;
 
     --body-font: 'Libre Caslon Text', serif;
     --titles-font: 'Fraunces', serif;
 
-    --page-color: transparent;
+    --headers-size: 28pt;
+    --subtitle-size: 14pt;
+    --h1-size: 20pt;
+    --h2-size: 18pt;
+    --h3-size: 14pt;
+    --h4-size: 12pt;
+    --body-size: 11.5pt;
+
+    --body-color: black;
+    --headers-color: black;
+    --subtitle-color: hsl(0, 0%, 35%);
+
+    --body-align: justify;
+    --headers-align: justify;
+
+    --body-line-height: 1.5;
+    --headers-line-height: 1.5;
+
+    --body-font-weight: normal;
+    --headers-font-weight: 450;
+    --subtitle-font-weight: 350;
 }
 
 @page {
@@ -26,10 +47,15 @@
     margin-block: var(--margin-vertical);
 }
 
+* {
+    font-size: var(--body-size);
+    color: var(--body-color);
+}
+
 body {
     font-family: var(--body-font);
-    line-height: 1.5;
-    text-align: justify;
+    line-height: var(--body-line-height);
+    text-align: var(--body-align);
     background-color: var(--page-color);
 }
 
@@ -38,23 +64,30 @@ h2,
 .doc-title,
 .doc-subtitle {
     font-family: var(--titles-font);
-    font-weight: 600;
+    font-weight: var(--headers-font-weight);
+    color: var(--headers-color);
+    text-align: var(--headers-align);
+    line-height: var(--headers-line-height);
 }
 
 .doc-title {
-    font-size: 28pt;
+    font-size: var(--headers-size);
     margin: 0;
 }
 
 .doc-subtitle {
-    opacity: 0.75;
-    font-size: 14pt;
+    font-size: var(--subtitle-size);
+    font-weight: var(--subtitle-font-weight);
     font-style: italic;
     margin-top: 0;
     margin-bottom: 1em;
+    color: var(--subtitle-color);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     break-after: avoid;
     page-break-after: avoid;
     margin: 0;
@@ -62,24 +95,25 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-    font-size: 20pt;
+    font-size: var(--h1-size);
 }
 
 h2 {
-    font-size: 18pt;
+    font-size: var(--h2-size);
 }
 
 h3 {
-    font-size: 14pt;
+    font-size: var(--h3-size);
 }
 
 h4 {
-    font-size: 12pt;
+    font-size: var(--h4-size);
     font-style: italic;
     text-indent: var(--indentation);
 }
 
 p {
+    font-weight: var(--body-font-weight);
     orphans: 4;
     widows: 3;
     margin: 0;
@@ -87,7 +121,7 @@ p {
     text-indent: var(--indentation);
 }
 
-:not(p) + p {
+:not(p)+p {
     text-indent: 0;
 }
 

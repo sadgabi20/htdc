@@ -1,8 +1,9 @@
 import { parse } from "../parser/index.ts";
 import { HTDC } from "../api.ts";
 import type { ListsTypes } from "../parser/types.ts";
+import type { ComposeOptions } from "../types.ts";
 
-export async function htdc2html(src: string) {
+export async function htdc2html(src: string, options: ComposeOptions = {}) {
     const doc = new HTDC();
     let currentList: ListsTypes | undefined;
 
@@ -23,6 +24,7 @@ export async function htdc2html(src: string) {
             case 'h4': doc.h4(el.txt); break;
             case 'p': doc.p(el.txt); break;
             case 'item': doc.item(el.txt); break;
+            case 'img': doc.img(el.txt, el.width === undefined ? {} : { width: el.width }); break;
             case 'list':
                 currentList = el.txt as ListsTypes;
                 doc.beginList(currentList);
@@ -34,7 +36,7 @@ export async function htdc2html(src: string) {
         doc.endList(currentList);
     }
 
-    const html = doc.toHTML();
+    const html = doc.toHTML(options.baseDir);
 
     return html;
 }

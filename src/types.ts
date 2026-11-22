@@ -8,7 +8,14 @@ export type TextAlignment = 'left' | 'center' | 'right' | 'justified';
 
 export interface HTMLDoc {
     fileName: string,
-    html: string
+    html: string,
+    /** Directory used to resolve local image paths when rendering to PDF. */
+    baseDir?: string
+}
+
+export interface ComposeOptions {
+    /** Directory that relative paths in a source document are resolved against. */
+    baseDir?: string
 }
 
 export interface DocumentConfig {

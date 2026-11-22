@@ -10,11 +10,32 @@ const HTDC_SYMBOLS = {
 };
 const TEXT_DIRECTIVES: ReadonlySet<string> = new Set(['filename', 'title', 'subtitle', 'h1', 'h2', 'h3', 'h4']);
 const LIST_DIRECTIVE = /^list\.(ul|ol|dl)$/;
+const IMG_DIRECTIVE = 'img';
 
 function logError(msg: string, options?: { pos?: { line: number, char: number } }) {
     const loc = options?.pos ? `${options.pos.line}:${options.pos.char} — ` : '';
     console.error(`\x1b[31m\x1b[1mERROR\x1b[0m  ${loc}${msg}`);
     return
+}
+
+/** Split `/img <path> [width]` into its path and optional width fraction. */
+function parseImageArgs(txt: string): { path: string, width?: number } {
+    const parts = txt.trim().split(/\s+/).filter(Boolean);
+    const last = parts[parts.length - 1];
+    const widthMatch = last && /^(\d*\.?\d+)(%)?$/.exec(last);
+
+    if (widthMatch && parts.length > 1) {
+        const value = Number(widthMatch[1]);
+        if (Number.isFinite(value) && value >= 0) {
+            parts.pop();
+            return {
+                path: parts.join(' '),
+                width: widthMatch[2] ? value / 100 : value,
+            };
+        }
+    }
+
+    return { path: parts.join(' ') };
 }
 
 export function tokenize(src: string): Token[] {
@@ -34,7 +55,6 @@ export function tokenize(src: string): Token[] {
         const c = src[i];
 
         if (c === '\r') {
-            // Ignore CR so CRLF documents are tokenized the same as LF documents
             i++;
             continue;
         }
@@ -178,6 +198,19 @@ export function parse(src: string) {
                 if (TEXT_DIRECTIVES.has(name)) {
                     flushAll();
                     ast.push({ type: name as RuleTypesAST, txt });
+                    continue;
+                }
+
+                if (name === IMG_DIRECTIVE) {
+                    flushAll();
+                    const image = parseImageArgs(txt);
+
+                    if (!image.path) {
+                        logError('/img requires an image path', { pos: { line: i + 1, char: 1 } });
+                        continue;
+                    }
+
+                    ast.push({ type: 'img', txt: image.path, width: image.width });
                     continue;
                 }
             }

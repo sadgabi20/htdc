@@ -1,5 +1,15 @@
 import type { DocumentConfig, HTMLDoc, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
 
+const DEFAULT_IMAGE_WIDTH = 0.25;
+
+function escapeAttr(value: string): string {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
 const PARAGRAPH_DEFAULT_CONFIG: ParagraphConfig = {
     alignment: 'justified',
     indentation: {
@@ -141,8 +151,9 @@ export class HTDC {
         return this;
     }
 
-    img(src: string, config: ImgConfig) {
-        this.nodes.push({ type: 'image', src, config });
+    img(src: string, config: ImgConfig = {}) {
+        const finalConfig: ImgConfig = { ...config, width: config.width ?? DEFAULT_IMAGE_WIDTH };
+        this.nodes.push({ type: 'image', src, config: finalConfig });
         return this;
     }
 
@@ -151,7 +162,7 @@ export class HTDC {
         return this;
     }
 
-    toHTML(): HTMLDoc {
+    toHTML(baseDir?: string): HTMLDoc {
         if (this.fileName === undefined) {
             throw Error('An HTDC document must have a file name');
         }
@@ -168,7 +179,11 @@ export class HTDC {
                 case 'beginList': return `<${node.listType}>`;
                 case 'endList': return `</${node.listType}>`;
                 case 'item': return `<li>${node.txt}</li>`;
-                case 'image': return `<img src="${node.src}" width="${node.config.width * 100}%" />`;
+                case 'image': {
+                    const width = (node.config.width ?? DEFAULT_IMAGE_WIDTH) * 100;
+                    const alt = node.config.title ? ` alt="${escapeAttr(node.config.title)}"` : '';
+                    return `<img class="doc-image" src="${node.src}" width="${width}%"${alt} />`;
+                }
                 case 'break': return '<br>'.repeat(node.count);
                 default: return '';
             }
@@ -179,6 +194,10 @@ export class HTDC {
 </body>
 </html>`;
 
-        return { fileName: this.fileName, html };
+        return {
+            fileName: this.fileName,
+            html,
+            ...(baseDir === undefined ? {} : { baseDir }),
+        };
     }
 }

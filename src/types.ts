@@ -1,5 +1,8 @@
 import type { PathLike } from 'node:fs';
 
+export type ConfigPrimitive = string | number | boolean | null;
+export type DirectiveConfig = Record<string, ConfigPrimitive>;
+
 export type NumberingPosition = 'tl' | 'tc' | 'tr' | 'bl' | 'bc' | 'br';
 export type PaginationFormat = '123' | 'abc' | 'roman';
 export type TextContainer = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'title' | 'subtitle';
@@ -8,7 +11,14 @@ export type TextAlignment = 'left' | 'center' | 'right' | 'justified';
 
 export interface HTMLDoc {
     fileName: string,
-    html: string
+    html: string,
+    /** Directory used to resolve local image paths when rendering to PDF. */
+    baseDir?: string
+}
+
+export interface ComposeOptions {
+    /** Directory that relative paths in a source document are resolved against. */
+    baseDir?: string
 }
 
 export interface DocumentConfig {

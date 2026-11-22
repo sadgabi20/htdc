@@ -1,4 +1,14 @@
-import type { DocumentConfig, HTMLDoc, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
+import type { DirectiveConfig, DocumentConfig, HTMLDoc, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
+
+const DEFAULT_IMAGE_WIDTH = 0.25;
+
+function escapeAttr(value: string): string {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
 
 const PARAGRAPH_DEFAULT_CONFIG: ParagraphConfig = {
     alignment: 'justified',
@@ -88,33 +98,33 @@ export class HTDC {
         return this;
     }
 
-    title(txt: string) {
-        this.nodes.push({ type: 'title', txt });
+    title(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'title', txt, config });
         return this;
     }
 
-    subtitle(txt: string) {
-        this.nodes.push({ type: 'subtitle', txt });
+    subtitle(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'subtitle', txt, config });
         return this;
     }
 
-    h1(txt: string) {
-        this.nodes.push({ type: 'h1', txt, num: this.#addTitle(1) });
+    h1(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h1', txt, num: this.#addTitle(1), config });
         return this;
     }
 
-    h2(txt: string) {
-        this.nodes.push({ type: 'h2', txt, num: this.#addTitle(2) });
+    h2(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h2', txt, num: this.#addTitle(2), config });
         return this;
     }
 
-    h3(txt: string) {
-        this.nodes.push({ type: 'h3', txt, num: this.#addTitle(3) });
+    h3(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h3', txt, num: this.#addTitle(3), config });
         return this;
     }
 
-    h4(txt: string) {
-        this.nodes.push({ type: 'h4', txt, num: this.#addTitle(4) });
+    h4(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h4', txt, num: this.#addTitle(4), config });
         return this;
     }
 
@@ -125,8 +135,8 @@ export class HTDC {
         return this;
     }
 
-    beginList(listType: 'ul' | 'ol' | 'dl') {
-        this.nodes.push({ type: 'beginList', listType })
+    beginList(listType: 'ul' | 'ol' | 'dl', config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'beginList', listType, config })
         return this;
     }
 
@@ -135,14 +145,15 @@ export class HTDC {
         return this;
     }
 
-    item(txt: string) {
+    item(txt: string, config: DirectiveConfig = {}) {
         txt = this.#parseTxt(txt);
-        this.nodes.push({ type: 'item', txt });
+        this.nodes.push({ type: 'item', txt, config });
         return this;
     }
 
-    img(src: string, config: ImgConfig) {
-        this.nodes.push({ type: 'image', src, config });
+    img(src: string, config: ImgConfig = {}) {
+        const finalConfig: ImgConfig = { ...config, width: config.width ?? DEFAULT_IMAGE_WIDTH };
+        this.nodes.push({ type: 'image', src, config: finalConfig });
         return this;
     }
 
@@ -151,7 +162,7 @@ export class HTDC {
         return this;
     }
 
-    toHTML(): HTMLDoc {
+    toHTML(baseDir?: string): HTMLDoc {
         if (this.fileName === undefined) {
             throw Error('An HTDC document must have a file name');
         }
@@ -168,7 +179,11 @@ export class HTDC {
                 case 'beginList': return `<${node.listType}>`;
                 case 'endList': return `</${node.listType}>`;
                 case 'item': return `<li>${node.txt}</li>`;
-                case 'image': return `<img src="${node.src}" width="${node.config.width * 100}%" />`;
+                case 'image': {
+                    const width = (node.config.width ?? DEFAULT_IMAGE_WIDTH) * 100;
+                    const alt = node.config.title ? ` alt="${escapeAttr(node.config.title)}"` : '';
+                    return `<img class="doc-image" src="${node.src}" width="${width}%"${alt} />`;
+                }
                 case 'break': return '<br>'.repeat(node.count);
                 default: return '';
             }
@@ -179,6 +194,10 @@ export class HTDC {
 </body>
 </html>`;
 
-        return { fileName: this.fileName, html };
+        return {
+            fileName: this.fileName,
+            html,
+            ...(baseDir === undefined ? {} : { baseDir }),
+        };
     }
 }

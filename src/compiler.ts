@@ -1,12 +1,17 @@
 import { chromium } from "@playwright/test"; // Or: import { chromium } from 'playwright';
-import type { HTMLDoc } from "./types.ts";
+import type { ComposeOptions, HTMLDoc } from "./types.ts";
 import { htdc2html } from "./compositor/index.ts";
 import { loadStyles } from "./styles/index.ts";
+import { inlineImages } from "./images/index.ts";
 
 const CSS = await loadStyles();
 
 export async function html2pdf(htmlDoc: HTMLDoc, css: string = CSS) {
-    const { fileName, html } = htmlDoc;
+    const { fileName, html, baseDir } = htmlDoc;
+
+    // Local image paths cannot resolve from the about:blank page used by
+    // setContent, so embed them as data URIs before injecting the HTML.
+    const composedHtml = await inlineImages(html, baseDir);
 
     // 1. Launch the browser
     const browser = await chromium.launch();
@@ -14,16 +19,21 @@ export async function html2pdf(htmlDoc: HTMLDoc, css: string = CSS) {
 
     try {
         // 3. Load HTML and inject CSS
-        await page.setContent(html, { waitUntil: 'networkidle' });
+        await page.setContent(composedHtml, { waitUntil: 'networkidle' });
         await page.addStyleTag({ content: css });
 
         // 4. (Optional but recommended) Set the media type to 'print'
         // Playwright uses 'print' by default, but being explicit avoids surprises.
         await page.emulateMedia({ media: 'print' });
 
-        // Fonts referenced by the stylesheet load asynchronously; do not create
-        // the PDF until they are ready or it may fall back to system fonts.
-        await page.evaluate(() => document.fonts.ready);
+        // Fonts and images load asynchronously; wait for both before printing
+        // so the PDF does not fall back to system fonts or omit images.
+        await page.evaluate(async () => {
+            await document.fonts.ready;
+            await Promise.all(
+                Array.from(document.images).map(img => img.decode().catch(() => undefined))
+            );
+        });
 
         // 5. Generate the PDF
         await page.pdf({
@@ -39,7 +49,7 @@ export async function html2pdf(htmlDoc: HTMLDoc, css: string = CSS) {
     }
 }
 
-export async function htdc2pdf(src:string) {
-    const htmlDoc = await htdc2html(src);
+export async function htdc2pdf(src: string, options: ComposeOptions = {}) {
+    const htmlDoc = await htdc2html(src, options);
     await html2pdf(htmlDoc, CSS);
 }

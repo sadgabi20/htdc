@@ -81,13 +81,26 @@ This writes `paper.pdf` to the current working directory.
 
 ## Document syntax
 
+HTDC syntax is command-driven, each command following a common syntax:
+
+```text
+/name.type? txt?
+```
+
+where:
+- `name`: the name of the command
+- `type`: an optional type if `name` supports it
+- `txt`: in-line text as the main argument where supported, processed as a text string until a line break
+
+#### Commands and markup:
+
 | Syntax | Meaning |
 | --- | --- |
-| `/filename name` | Base name of the output file (`name.pdf`). Required. |
-| `/title text`, `/subtitle text` | Document title and subtitle. |
-| `/h1 text` … `/h4 text` | Numbered headings (for example `1`, `1.1`, `1.1.1`). |
+| `/filename txt` | Base name of the output file (`name.pdf`). Required. |
+| `/title txt`, `/subtitle txt` | Document title and subtitle. |
+| `/h1 txt` … `/h4 txt` | Numbered headings (for example `1`, `1.1`, `1.1.1`). |
 | Plain text | Paragraph text; consecutive lines are joined, blank lines separate paragraphs. |
-| `/list.ul`, `/list.ol`, `/list.dl` | Start an unordered, ordered, or definition list. |
+| `/list` | Start an unordered (`.ul`), ordered (`.ol`), or definition list (`.dl`). Type is required. |
 | `- text` | An item in the current list. |
 | `*text*` | Italic text. |
 | `/* text */` | Comment; may span multiple lines. |

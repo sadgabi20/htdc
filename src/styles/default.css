@@ -103,6 +103,15 @@ li {
     margin-bottom: 0.35em;
 }
 
+.doc-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1em auto;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
 @media print {
     .screen-only {
         display: none;

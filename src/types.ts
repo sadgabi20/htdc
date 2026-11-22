@@ -1,5 +1,8 @@
 import type { PathLike } from 'node:fs';
 
+export type ConfigPrimitive = string | number | boolean | null;
+export type DirectiveConfig = Record<string, ConfigPrimitive>;
+
 export type NumberingPosition = 'tl' | 'tc' | 'tr' | 'bl' | 'bc' | 'br';
 export type PaginationFormat = '123' | 'abc' | 'roman';
 export type TextContainer = 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'title' | 'subtitle';

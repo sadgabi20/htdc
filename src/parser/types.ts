@@ -1,3 +1,7 @@
+import type { DirectiveConfig } from "../types.ts";
+
+export type { ConfigPrimitive, DirectiveConfig } from "../types.ts";
+
 export interface Token {
     type: 'IDENT' | 'SYMBOL' | 'SPACE' | 'UNKNOWN' ;
     value: string;
@@ -11,6 +15,10 @@ export type ListsTypes = 'ul' | 'ol' | 'dl' ;
 export interface RulesetAST {
     type: RuleTypesAST,
     txt: string,
-    /** Image width as a fraction of the page width (0–1). */
+    /** The optional `.type` suffix of a directive, e.g. `ul` in `/list.ul`. */
+    variant?: string,
+    /** Key-value pairs extracted from a trailing `{ ... }` config object. */
+    config?: DirectiveConfig,
+    /** Image width from the legacy positional form (or a config `width`). */
     width?: number,
 }

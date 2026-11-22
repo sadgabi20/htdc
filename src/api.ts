@@ -1,4 +1,4 @@
-import type { DocumentConfig, HTMLDoc, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
+import type { DirectiveConfig, DocumentConfig, HTMLDoc, ImgConfig, PaginationConfig, ParagraphConfig, SectionConfig } from "./types.ts";
 
 const DEFAULT_IMAGE_WIDTH = 0.25;
 
@@ -98,33 +98,33 @@ export class HTDC {
         return this;
     }
 
-    title(txt: string) {
-        this.nodes.push({ type: 'title', txt });
+    title(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'title', txt, config });
         return this;
     }
 
-    subtitle(txt: string) {
-        this.nodes.push({ type: 'subtitle', txt });
+    subtitle(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'subtitle', txt, config });
         return this;
     }
 
-    h1(txt: string) {
-        this.nodes.push({ type: 'h1', txt, num: this.#addTitle(1) });
+    h1(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h1', txt, num: this.#addTitle(1), config });
         return this;
     }
 
-    h2(txt: string) {
-        this.nodes.push({ type: 'h2', txt, num: this.#addTitle(2) });
+    h2(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h2', txt, num: this.#addTitle(2), config });
         return this;
     }
 
-    h3(txt: string) {
-        this.nodes.push({ type: 'h3', txt, num: this.#addTitle(3) });
+    h3(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h3', txt, num: this.#addTitle(3), config });
         return this;
     }
 
-    h4(txt: string) {
-        this.nodes.push({ type: 'h4', txt, num: this.#addTitle(4) });
+    h4(txt: string, config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'h4', txt, num: this.#addTitle(4), config });
         return this;
     }
 
@@ -135,8 +135,8 @@ export class HTDC {
         return this;
     }
 
-    beginList(listType: 'ul' | 'ol' | 'dl') {
-        this.nodes.push({ type: 'beginList', listType })
+    beginList(listType: 'ul' | 'ol' | 'dl', config: DirectiveConfig = {}) {
+        this.nodes.push({ type: 'beginList', listType, config })
         return this;
     }
 
@@ -145,9 +145,9 @@ export class HTDC {
         return this;
     }
 
-    item(txt: string) {
+    item(txt: string, config: DirectiveConfig = {}) {
         txt = this.#parseTxt(txt);
-        this.nodes.push({ type: 'item', txt });
+        this.nodes.push({ type: 'item', txt, config });
         return this;
     }
 

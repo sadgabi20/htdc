@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Source Serif 4';
-    src: url(../fonts/SourceSerif4-VariableFont_opsz\,wght.ttf);
+    font-family: 'Libre Caslon Text';
+    src: url(../fonts/LibreCaslonText-Regular.ttf);
 }
 
 @font-face {
@@ -14,7 +14,7 @@
     --margin-vertical: 2.54cm;
     --indentation: 1.25cm;
 
-    --body-font: 'Source Serif 4', serif;
+    --body-font: 'Libre Caslon Text', serif;
     --titles-font: 'Fraunces', serif;
 
     --page-color: transparent;

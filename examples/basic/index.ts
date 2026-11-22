@@ -5,4 +5,4 @@ import { htdc2pdf } from "../../src/compiler.ts";
 const srcPath = path.resolve('./examples/basic/basic.htdc');
 const src = await fs.readFile(srcPath, { encoding: 'utf-8' });
 
-htdc2pdf(src);
+await htdc2pdf(src, { baseDir: path.dirname(srcPath) });

@@ -17,6 +17,8 @@ doc.h1("Speed, Torpedoes, and Surface Warfare in the 1930s");
 
 doc.p("Originally conceived as torpedo boat destroyers in the late nineteenth century, the destroyer rapidly evolved into the backbone of modern blue-water navies. By the 1930s, naval architects focused heavily on maximizing top speed and torpedo broadside weight while maintaining enough endurance for ocean-going fleet operations.");
 
+doc.img('./img/zumwalt_dd.png', { width: 0.35 });
+
 doc.p("Hull lines were lengthened and narrowed significantly to achieve high length-to-beam ratios. This hydrodynamic optimization allowed destroyers to sustain speeds exceeding 38 knots in calm seas, outpacing capital ships and screening cruisers alike.");
 
 doc.h2("Propulsion and Armament Trade-offs");

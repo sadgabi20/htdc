@@ -141,7 +141,7 @@ li {
     display: block;
     max-width: 100%;
     height: auto;
-    margin: 1em auto;
+    margin: 1.5em auto;
     break-inside: avoid;
     page-break-inside: avoid;
 }
